@@ -6,7 +6,7 @@
 /*   By: corosteg <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/11 17:37:43 by corosteg          #+#    #+#             */
-/*   Updated: 2017/05/31 17:52:53 by corosteg         ###   ########.fr       */
+/*   Updated: 2017/09/29 15:11:08 by corosteg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,11 @@ int			check_for_apply(const char *format, va_list ap, int a, int b)
 	return (0);
 }
 
-int			rest(const char *format)
+int			rest(const char *format, int i, int a)
 {
-	int		i;
-	int		a;
 	char	*str;
 	char	*flags;
 
-	i = 0;
-	a = 0;
 	str = ft_strdup(format);
 	flags = ft_strdup("sSpdDioOuUxXcC%");
 	while (str[i] == ' ' || str[i] == '0' || str[i] == '-' || str[i] == '+'
@@ -67,7 +63,7 @@ int			rest(const char *format)
 		if (str[i] == flags[a])
 		{
 			i++;
-			break;
+			break ;
 		}
 		a++;
 	}
@@ -90,10 +86,10 @@ int			ft_print(const char *format, ...)
 		while (format[i] == '%')
 		{
 			ret = (ret + check_for_apply(&format[i + 1], ap, 0, 0));
-			i = (i + (rest(&format[i + 1])) + 1);
+			i = (i + (rest(&format[i + 1], 0, 0)) + 1);
 		}
 		if (format[i] == '\0')
-			break;
+			break ;
 		ft_putchar(format[i]);
 		ret++;
 		i++;
